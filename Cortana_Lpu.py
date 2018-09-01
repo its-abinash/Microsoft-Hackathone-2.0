@@ -17,6 +17,8 @@ import webbrowser as wb
 
 # variable 's' contains only the path at very beginning it contains empty string.
 s = ''
+
+# find_file() and ab() both gonna search the file/folder inside the pc the user is using like the Real Cortana does.And return the Path
 def find_file(root_folder, rex):
     global s
     for root,dirs,files in os.walk(root_folder):
@@ -43,6 +45,7 @@ class MyFrame(wx.Frame):
         panel = wx.Panel(self, 0)
         #imagen = wx.StaticBitmap(panel, -1, wx.Bitmap('Aussie-Cortana.jpg', wx.BITMAP_TYPE_ANY),
         #                         pos = wx.Point(0, 0), size = (550, 700))
+        #This is a small animation
         imagen_gif = wx.adv.AnimationCtrl(panel, wx.ID_ANY, wx.adv.NullAnimation, (20, 0), (-1, -1), wx.adv.AC_DEFAULT_STYLE)
         imagen_gif.LoadFile('cortana-gif-8.gif')
         imagen_gif.Play()
@@ -81,8 +84,8 @@ class MyFrame(wx.Frame):
             except:
                 try:
                     #Chrome operation
-                    chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
-                    #chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+                    #chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
+                    chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
                     f_text = 'https://www.google.co.in/search?q='+ActInp
                     wb.get(chrome_path).open(f_text)
                 except:

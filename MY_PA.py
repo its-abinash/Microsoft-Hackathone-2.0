@@ -1,9 +1,11 @@
 import wx
 import wx.adv
-#new
+
 import os
 import re
 import win32api
+import pyttsx
+engine = pyttsx.init()
 #upto this
 
 import wikipedia
@@ -51,9 +53,11 @@ class MyFrame(wx.Frame):
         
         lbl = wx.StaticText(panel)
         my_sizer.Add(lbl, -1, wx.ALL, 300)
+
+        
+        
         self.txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER,size=(400,45))   #This is for the search box
         self.txt.SetFocus()        
-        
         self.txt.Bind(wx.EVT_TEXT_ENTER, self.OnEnter)
         my_sizer.Add(self.txt, 0, wx.ALL, 68)
         self.SetBackgroundColour("black")
@@ -69,35 +73,25 @@ class MyFrame(wx.Frame):
                 #wikipedia
                 #Gonna Fix the bug i.e if I am searching amitabh bacchan it is working with the real data about amitabh bachhan,But If I am asking "Who Is Amitabh Bachhan?"
                 #It fails to answer and come up with some different and unexpected output as well.So Lets fix this bug.
-                '''r = sr.Recognizer()
-                with sr.Microphone() as source:
-                    print('Say Something:')
-                    audio = r.listen(source)
-                    print ('Done!')
-
-                text = r.recognize_google(audio, language = 'hi-IN')
-                print (text)
-                print (r.recognize_google(audio))'''
                 input = input.split(' ')
                 input = " ".join(input[2:])      #Here I am cosidering the 2nd word only as input.And ignoring the word like,"What is"/"How is"/"Who is" that kind of.
-                tts = gTTS(text="According to wikipedia " + wikipedia.summary(input,sentences=3), lang='en',slow=False)
-                tts.save("New.mp3")
-                playsound("F:\\MyPA\\New.mp3")
+                engine.say(text="According to wikipedia " + wikipedia.summary(input,sentences=3), lang='en',slow=False)
+                engine.runAndWait()
                 
             except:
                 try:
                     #Chrome operation
-                    chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-                    f_text = 'https://www.google.co.in/search?q='+input
+                    chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
+                    #chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+                    f_text = 'https://www.google.co.in/search?q='+ActInp
                     wb.get(chrome_path).open(f_text)
                 except:
                     #wolframalpha
                     app_id = "GRXYYG-7U9HLUEWY9"
                     client = wolframalpha.Client(app_id)
                     res = client.query(input)
-                    tts = gTTS(text="According to Your Question " + next(res.results).text, lang='en',slow=False)
-                    tts.save("New1.mp3")
-                    playsound("F:\\MyPA\\New1.mp3")
+                    engine.say(text="According to Your Question " + next(res.results).text, lang='en',slow=False)
+                    engine.runAndWait()
         else:
             os.startfile(s)
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import wx
 import wx.adv
-
+#new
 import os
 import re
 import win32api
@@ -38,7 +38,7 @@ class MyFrame(wx.Frame):
             pos=wx.DefaultPosition, size=wx.Size(450, 700),                # This is for the frame
             style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION |
              wx.CLOSE_BOX | wx.CLIP_CHILDREN,
-            title="Chicken-The Warrier")
+            title="Cortana_Lpu")
         #panel = wx.Panel(self)
         panel = wx.Panel(self, 0)
         #imagen = wx.StaticBitmap(panel, -1, wx.Bitmap('Aussie-Cortana.jpg', wx.BITMAP_TYPE_ANY),

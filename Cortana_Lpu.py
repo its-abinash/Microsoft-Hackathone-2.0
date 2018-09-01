@@ -1,6 +1,5 @@
 import wx
 import wx.adv
-#new
 import os
 import re
 import win32api
@@ -38,7 +37,7 @@ class MyFrame(wx.Frame):
             pos=wx.DefaultPosition, size=wx.Size(450, 700),                # This is for the frame
             style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION |
              wx.CLOSE_BOX | wx.CLIP_CHILDREN,
-            title="Cortana_Lpu")
+            title="Chicken-The Warrier")
         #panel = wx.Panel(self)
         panel = wx.Panel(self, 0)
         #imagen = wx.StaticBitmap(panel, -1, wx.Bitmap('Aussie-Cortana.jpg', wx.BITMAP_TYPE_ANY),
@@ -53,18 +52,30 @@ class MyFrame(wx.Frame):
         
         lbl = wx.StaticText(panel)
         my_sizer.Add(lbl, -1, wx.ALL, 300)
+        engine.say('Hii')
+        engine.runAndWait()
+        engine.say('I am cortana')
+        engine.runAndWait()
+        engine.say('What Can I Help You With?')
+        engine.runAndWait()
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            engine.say('What Yoy Want Me To Do For You?')
+            engine.runAndWait()
+            audio = r.listen(source)
+            engine.say('Ok Sir Please Wait Untill I Found Something Better For You!')
+            engine.runAndWait()
+
+        #text = r.recognize_google(audio, language = 'en')
+        input = r.recognize_google(audio)
         
-        self.txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER,size=(400,45))   #This is for the search box
+        self.txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER,size=(400,45), value = input)   #This is for the search box
         self.txt.SetFocus()        
         self.txt.Bind(wx.EVT_TEXT_ENTER, self.OnEnter)
         my_sizer.Add(self.txt, 0, wx.ALL, 68)
         self.SetBackgroundColour("black")
-        
         panel.SetSizer(my_sizer)
         self.Show()
-        engine.say("Hi I am Cortana.")
-        engine.say("What Can I Help You With?")
-        engine.runAndWait()
     def OnEnter(self, event):
         input = self.txt.GetValue()
         ActInp = input
@@ -83,8 +94,8 @@ class MyFrame(wx.Frame):
             except:
                 try:
                     #Chrome operation
-                    chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
-                    #chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+                    #chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
+                    chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
                     f_text = 'https://www.google.co.in/search?q='+ActInp
                     wb.get(chrome_path).open(f_text)
                 except:

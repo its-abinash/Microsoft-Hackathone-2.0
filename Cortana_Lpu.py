@@ -37,7 +37,7 @@ class MyFrame(wx.Frame):
             pos=wx.DefaultPosition, size=wx.Size(450, 700),                # This is for the frame
             style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CAPTION |
              wx.CLOSE_BOX | wx.CLIP_CHILDREN,
-            title="Chicken-The Warrier")
+            title="Cortana_Lpu")
         #panel = wx.Panel(self)
         panel = wx.Panel(self, 0)
         #imagen = wx.StaticBitmap(panel, -1, wx.Bitmap('Aussie-Cortana.jpg', wx.BITMAP_TYPE_ANY),
@@ -60,7 +60,7 @@ class MyFrame(wx.Frame):
         engine.runAndWait()
         r = sr.Recognizer()
         with sr.Microphone() as source:
-            engine.say('What Yoy Want Me To Do For You?')
+            engine.say('What You Want Me To Do For You?')
             engine.runAndWait()
             audio = r.listen(source)
             engine.say('Ok Sir Please Wait Untill I Found Something Better For You!')
@@ -83,28 +83,28 @@ class MyFrame(wx.Frame):
         ab(ActInp)
         if s == '' :
             try:
-                #wikipedia
-                #Gonna Fix the bug i.e if I am searching amitabh bacchan it is working with the real data about amitabh bachhan,But If I am asking "Who Is Amitabh Bachhan?"
-                #It fails to answer and come up with some different and unexpected output as well.So Lets fix this bug.
-                input = input.split(' ')
-                input = " ".join(input[2:])      #Here I am cosidering the 2nd word only as input.And ignoring the word like,"What is"/"How is"/"Who is" that kind of.
-                engine.say(text="According to wikipedia " + wikipedia.summary(input,sentences=3), lang='en',slow=False)
+                #wolframalpha
+                input = ActInp
+                app_id = "GRXYYG-7U9HLUEWY9"
+                client = wolframalpha.Client(app_id)
+                res = client.query(input)
+                engine.say(text="According to Your Question " + next(res.results).text)
                 engine.runAndWait()
-                
             except:
                 try:
+                    #wikipedia
+                    #Gonna Fix the bug i.e if I am searching amitabh bacchan it is working with the real data about amitabh bachhan,But If I am asking "Who Is Amitabh Bachhan?"
+                    #It fails to answer and come up with some different and unexpected output as well.So Lets fix this bug.
+                    input = input.split(' ')
+                    input = " ".join(input[2:])      #Here I am cosidering the 2nd word only as input.And ignoring the word like,"What is"/"How is"/"Who is" that kind of.
+                    engine.say("According to wikipedia " + wikipedia.summary(input,sentences=3))
+                    engine.runAndWait()
+                except:
                     #Chrome operation
                     #chrome_path = 'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe %s'
                     chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
                     f_text = 'https://www.google.co.in/search?q='+ActInp
                     wb.get(chrome_path).open(f_text)
-                except:
-                    #wolframalpha
-                    app_id = "GRXYYG-7U9HLUEWY9"
-                    client = wolframalpha.Client(app_id)
-                    res = client.query(input)
-                    engine.say(text="According to Your Question " + next(res.results).text, lang='en',slow=False)
-                    engine.runAndWait()
         else:
             os.startfile(s)
 if __name__ == "__main__":
